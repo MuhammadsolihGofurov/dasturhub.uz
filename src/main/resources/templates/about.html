@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="uz" xmlns:th="http://www.thymeleaf.org" x-data="{ darkMode: false }" :class="{ 'dark': darkMode }">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biz haqimizda — DasturHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: { extend: { colors: { brand: { 500: '#dc2626', 600: '#b91c1c' } } } }
+        }
+    </script>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.01em; }
+        .red-gradient-bg {
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.05) 0%, rgba(0, 0, 0, 0) 100%);
+        }
+    </style>
+</head>
+<body class="bg-white dark:bg-[#050505] text-slate-900 dark:text-slate-100 transition-colors duration-500">
+
+<div th:replace="~{fragments/header :: myHeader}"></div>
+
+<!-- 1. Hero Section -->
+<section class="relative pt-32 pb-20 overflow-hidden red-gradient-bg">
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+        <div class="max-w-3xl">
+            <span class="inline-block px-4 py-1.5 bg-brand-500/10 text-brand-500 text-[11px] font-bold uppercase tracking-[0.2em] rounded-full mb-6">Bizning hikoyamiz</span>
+            <h1 class="text-5xl md:text-6xl font-800 tracking-tighter mb-8 leading-tight">
+                Biz shunchaki akademiya emasmiz, biz <span class="text-brand-500 italic">kelajakni</span> quramiz.
+            </h1>
+            <p class="text-xl text-slate-500 dark:text-slate-400 leading-relaxed">
+                DasturHub 2024-yilda O'zbekistonda dasturlash ta'limini yangi bosqichga olib chiqish maqsadida tashkil etilgan. Bizning maqsadimiz — nazariya va amaliyot o'rtasidagi ko'prik bo'lish.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- 2. Stats Section -->
+<section class="py-20 border-y border-slate-100 dark:border-white/5">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-12">
+            <div class="text-center">
+                <h3 class="text-4xl font-800 text-brand-500 mb-2">5,000+</h3>
+                <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Bitiruvchilar</p>
+            </div>
+            <div class="text-center">
+                <h3 class="text-4xl font-800 text-brand-500 mb-2">50+</h3>
+                <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Ekspert Mentorlar</p>
+            </div>
+            <div class="text-center">
+                <h3 class="text-4xl font-800 text-brand-500 mb-2">120+</h3>
+                <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Hamkor Kompaniyalar</p>
+            </div>
+            <div class="text-center">
+                <h3 class="text-4xl font-800 text-brand-500 mb-2">95%</h3>
+                <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Ishga joylashish</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 3. Values Section -->
+<section class="py-24">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-col md:flex-row gap-16 items-center">
+            <div class="flex-1 space-y-8">
+                <h2 class="text-3xl font-800 uppercase tracking-tighter">Nega aynan <span class="text-brand-500">DasturHub?</span></h2>
+
+                <div class="flex gap-6">
+                    <div class="w-12 h-12 shrink-0 bg-brand-500 rounded-2xl flex items-center justify-center text-white font-bold">01</div>
+                    <div>
+                        <h4 class="text-lg font-bold mb-2">Sifatli Kontent</h4>
+                        <p class="text-slate-500 text-sm leading-relaxed">Barcha darslarimiz xalqaro standartlar va zamonaviy texnologiyalar asosida mutaxassislar tomonidan ishlab chiqilgan.</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-6">
+                    <div class="w-12 h-12 shrink-0 bg-brand-500 rounded-2xl flex items-center justify-center text-white font-bold">02</div>
+                    <div>
+                        <h4 class="text-lg font-bold mb-2">Amaliy Tajriba</h4>
+                        <p class="text-slate-500 text-sm leading-relaxed">Faqat nazariya emas, balki real loyihalar ustida ishlash orqali portfoliongizni boyitasiz.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-1 relative w-full aspect-square md:aspect-video rounded-3xl overflow-hidden shadow-2xl">
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1000" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-brand-500/10 mix-blend-multiply"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 4. Team Section -->
+<section class="py-24 bg-[#fdfdfd] dark:bg-[#080808]">
+    <div class="max-w-7xl mx-auto px-6 text-center mb-16">
+        <h2 class="text-3xl font-800 uppercase tracking-tighter mb-4">Jamoamiz <span class="text-brand-500">Ekspertlari</span></h2>
+        <div class="w-20 h-1 bg-brand-500 mx-auto rounded-full"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+        <!-- Team Member 1 -->
+        <div class="group text-center">
+            <div class="w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden border-4 border-white dark:border-white/5 shadow-xl group-hover:border-brand-500 transition-colors duration-500">
+                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover">
+            </div>
+            <h4 class="text-xl font-bold">Alisher Zokirov</h4>
+            <p class="text-[10px] font-bold text-brand-500 uppercase tracking-widest mt-1">Founder & CEO</p>
+        </div>
+
+        <!-- Team Member 2 -->
+        <div class="group text-center">
+            <div class="w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden border-4 border-white dark:border-white/5 shadow-xl group-hover:border-brand-500 transition-colors duration-500">
+                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover">
+            </div>
+            <h4 class="text-xl font-bold">Madina Rahimova</h4>
+            <p class="text-[10px] font-bold text-brand-500 uppercase tracking-widest mt-1">Senior Java Developer</p>
+        </div>
+
+        <!-- Team Member 3 -->
+        <div class="group text-center">
+            <div class="w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden border-4 border-white dark:border-white/5 shadow-xl group-hover:border-brand-500 transition-colors duration-500">
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover">
+            </div>
+            <h4 class="text-xl font-bold">Jasur Abidov</h4>
+            <p class="text-[10px] font-bold text-brand-500 uppercase tracking-widest mt-1">Lead UI/UX Designer</p>
+        </div>
+
+        <!-- Team Member 4 -->
+        <div class="group text-center">
+            <div class="w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden border-4 border-white dark:border-white/5 shadow-xl group-hover:border-brand-500 transition-colors duration-500">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover">
+            </div>
+            <h4 class="text-xl font-bold">Sardor Aliyev</h4>
+            <p class="text-[10px] font-bold text-brand-500 uppercase tracking-widest mt-1">Mobile Developer</p>
+        </div>
+    </div>
+</section>
+
+<div th:replace="~{fragments/footer :: myFooter}"></div>
+
+</body>
+</html>

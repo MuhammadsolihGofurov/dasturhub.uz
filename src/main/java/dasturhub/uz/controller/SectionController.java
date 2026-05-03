@@ -1,6 +1,6 @@
 package dasturhub.uz.controller;
 
-import ch.qos.logback.core.model.Model;
+import org.springframework.ui.Model;
 import dasturhub.uz.entity.Section;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

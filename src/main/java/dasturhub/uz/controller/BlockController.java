@@ -1,6 +1,7 @@
 package dasturhub.uz.controller;
 
 import dasturhub.uz.entity.Block;
+import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;

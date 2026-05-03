@@ -1,4 +1,4 @@
-<header th:fragment="myHeader"
+<header th:fragment="myHeader(page)"
         x-data="{ mobileMenuOpen: false }"
         class="fixed top-0 w-full z-50 bg-white/80 dark:bg-[#050505]/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/5">
 
@@ -15,9 +15,17 @@
 
             <!-- 2. Desktop Navigation (Hidden on Mobile) -->
             <nav class="hidden md:flex items-center gap-8 text-[11px] font-bold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
-                <a href="/courses" class="hover:text-brand-500 transition-colors">Kurslar</a>
-                <a href="/about" class="hover:text-brand-500 transition-colors">Biz haqimizda</a>
-                <a href="#" class="hover:text-brand-500 transition-colors">Blog</a>
+                <a href="/courses"
+                   th:classappend="${page == 'courses' ? 'text-brand-500' : 'text-slate-500'}"
+                   class="hover:text-brand-500 transition-colors">Kurslar</a>
+
+                <a href="/about"
+                   th:classappend="${page == 'about' ? 'text-brand-500' : 'text-slate-500'}"
+                   class="hover:text-brand-500 transition-colors">Biz haqimizda</a>
+
+                <a href="#"
+                   th:classappend="${page == 'blog' ? 'text-brand-500' : 'text-slate-500'}"
+                   class="hover:text-brand-500 transition-colors">Blog</a>
             </nav>
 
             <!-- 3. Actions (Theme + Auth + Mobile Toggle) -->
@@ -33,8 +41,8 @@
 
                 <!-- Auth Buttons (Desktop) -->
                 <div class="hidden md:flex items-center gap-6">
-                    <a href="#" class="text-[11px] font-bold uppercase tracking-widest hover:text-brand-500 transition-colors">Kirish</a>
-                    <a href="#" class="bg-brand-500 text-white px-5 py-2.5 rounded-full text-[10px] font-800 uppercase tracking-widest hover:bg-brand-600 transition shadow-lg shadow-brand-500/20">A'zo bo'lish</a>
+                    <button type="button" onclick="handleSoon()" class="text-[11px] font-bold uppercase tracking-widest hover:text-brand-500 transition-colors">Kirish</button>
+                    <button type="button" onclick="handleSoon()" class="bg-brand-500 text-white px-5 py-2.5 rounded-full text-[10px] font-800 uppercase tracking-widest hover:bg-brand-600 transition shadow-lg shadow-brand-500/20">A'zo bo'lish</button>
                 </div>
 
                 <!-- Mobile Menu Toggle (Hamburger) -->

@@ -1,7 +1,10 @@
 package dasturhub.uz.controller;
 
-import ch.qos.logback.core.model.Model;
+import org.springframework.ui.Model;
 import dasturhub.uz.entity.Course;
+import dasturhub.uz.entity.Page;
+import dasturhub.uz.services.PageService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,9 +12,19 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/courses")
 public class CourseController {
 
+    @Autowired
+    private PageService pageService;
+
     @GetMapping
     public String getAllCourses(Model model) {
-        // Hamma kurslarni olish logikasi
+        Page homePage = pageService.getPage(3L);
+
+        model.addAttribute("seo_title", homePage.getSeoTitle());
+        model.addAttribute("seo_description", homePage.getSeoDescription());
+        model.addAttribute("seo_keywords", homePage.getSeoKeywords());
+
+
+
         return "courses";
     }
 

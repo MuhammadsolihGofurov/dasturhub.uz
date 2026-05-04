@@ -1,8 +1,10 @@
 package dasturhub.uz.controller;
 
+import dasturhub.uz.entity.Course;
 import dasturhub.uz.entity.Page;
 import dasturhub.uz.repository.PageRepository;
 import dasturhub.uz.services.PageService;
+import dasturhub.uz.services.course.CourseService;
 import org.springframework.ui.Model;
 import dasturhub.uz.entity.Banner;
 import dasturhub.uz.repository.BannerRepository;
@@ -21,14 +23,18 @@ public class MainController {
 
     @Autowired
     private PageService pageService;
+    @Autowired
+    private CourseService courseService;
 
 
     @GetMapping
     public String getMainIndexPage(Model model) {
         List<Banner> banners = bannerRepository.findAll();
         Page homePage = pageService.getPage(1L);
+        List<Course> courses = courseService.getAllCourse();
 
         model.addAttribute("banners", banners);
+        model.addAttribute("courses", courses);
         model.addAttribute("seo_title", homePage.getSeoTitle());
         model.addAttribute("seo_description", homePage.getSeoDescription());
         model.addAttribute("seo_keywords", homePage.getSeoKeywords());

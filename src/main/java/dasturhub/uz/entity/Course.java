@@ -25,6 +25,9 @@ public class Course {
     @Column(name="imageUrl")
     private String imageUrl;
 
+    @Column(name="price")
+    private Double price;
+
     // here sections
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Section> sections;

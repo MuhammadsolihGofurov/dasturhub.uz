@@ -10,53 +10,20 @@
     <div class="max-w-7xl mx-auto px-6">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
 
-            <!-- Java Course -->
-            <div class="group relative">
+            <div th:each="course : ${courses}" class="group relative">
                 <a th:href="@{/courses/details}">
                     <div class="overflow-hidden bg-slate-100 dark:bg-white/5 aspect-[16/10] mb-6 rounded-2xl">
-                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1000" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
+                        <img th:src="${course.imageUrl}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
                     </div>
                     <div class="px-2">
                         <div class="flex items-center gap-3 mb-3">
                             <span class="w-8 h-[1px] bg-brand-500"></span>
-                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Backend</span>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Dasturlash</span>
                         </div>
-                        <h3 class="text-xl font-bold dark:text-white mb-2 group-hover:text-brand-500 transition">Java Spring Boot: Enterprise</h3>
-                        <p class="text-[15px] font-bold text-brand-500">1,200,000 UZS</p>
+                        <h3 th:text="${course.title}" class="text-xl font-bold dark:text-white mb-2 group-hover:text-brand-500 transition">Java Spring Boot: Enterprise</h3>
+                        <p th:text="${course.price}" class="text-[15px] font-bold text-brand-500">1,200,000 UZS</p>
                     </div>
                 </a>
-                <div class="absolute -bottom-4 left-0 w-0 h-[2px] bg-brand-500 transition-all duration-500 group-hover:w-full"></div>
-            </div>
-
-            <!-- React Course -->
-            <div class="group relative">
-                <div class="overflow-hidden bg-slate-100 dark:bg-white/5 aspect-[16/10] mb-6 rounded-2xl">
-                    <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=80&w=1000" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
-                </div>
-                <div class="px-2">
-                    <div class="flex items-center gap-3 mb-3">
-                        <span class="w-8 h-[1px] bg-brand-500"></span>
-                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Frontend</span>
-                    </div>
-                    <h3 class="text-xl font-bold dark:text-white mb-2 group-hover:text-brand-500 transition">React & Next.js Masterclass</h3>
-                    <p class="text-[15px] font-bold text-brand-500">1,100,000 UZS</p>
-                </div>
-                <div class="absolute -bottom-4 left-0 w-0 h-[2px] bg-brand-500 transition-all duration-500 group-hover:w-full"></div>
-            </div>
-
-            <!-- Flutter Course -->
-            <div class="group relative">
-                <div class="overflow-hidden bg-slate-100 dark:bg-white/5 aspect-[16/10] mb-6 rounded-2xl">
-                    <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=1000" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
-                </div>
-                <div class="px-2">
-                    <div class="flex items-center gap-3 mb-3">
-                        <span class="w-8 h-[1px] bg-brand-500"></span>
-                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Mobile</span>
-                    </div>
-                    <h3 class="text-xl font-bold dark:text-white mb-2 group-hover:text-brand-500 transition">Flutter: Multi-platform Apps</h3>
-                    <p class="text-[15px] font-bold text-brand-500">1,300,000 UZS</p>
-                </div>
                 <div class="absolute -bottom-4 left-0 w-0 h-[2px] bg-brand-500 transition-all duration-500 group-hover:w-full"></div>
             </div>
 

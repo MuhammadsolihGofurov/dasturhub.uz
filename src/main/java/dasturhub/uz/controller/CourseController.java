@@ -18,6 +18,7 @@ public class CourseController {
 
     @Autowired
     private PageService pageService;
+
     @Autowired
     private CourseService courseService;
 

@@ -21,6 +21,8 @@ public class Lesson {
     @Column(name="title")
     private String title;
 
+    @Column(name="order_number")
+    private Integer order;
 
     @Column(name="description")
     private String description;

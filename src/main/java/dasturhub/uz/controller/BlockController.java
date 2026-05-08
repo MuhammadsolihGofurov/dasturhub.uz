@@ -1,26 +1,70 @@
 package dasturhub.uz.controller;
 
+import dasturhub.uz.dtos.block.CreateAndEditBlockDto;
 import dasturhub.uz.entity.Block;
+import dasturhub.uz.entity.Lesson;
+import dasturhub.uz.services.block.IBlockService;
+import dasturhub.uz.services.lesson.LessonService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/blocks")
 public class BlockController {
 
-    @PostMapping("/add-to-lesson/{lessonId}")
-    public String addBlockToLesson(@PathVariable String lessonId, @ModelAttribute Block block) {
-        // Darsga yangi kontent blokini qo'shish (Text, Video, Code)
-        return "redirect:/lessons/" + lessonId;
+    @Autowired
+    private IBlockService blockService;
+    @Autowired
+    private LessonService lessonService;
+
+    //  === for admin ===
+    @GetMapping("/manage/{lessonId}")
+    public String manageBlocks(@PathVariable("lessonId") String lessonId, Model model) {
+        List<Block> blocks = blockService.getAllByLessonIdAndOrder(lessonId);
+        Lesson lesson = lessonService.getLessonById(lessonId);
+
+        model.addAttribute("blocks", blocks);
+        model.addAttribute("lessonId", lessonId);
+        model.addAttribute("sectionId", lesson.getSection().getId());
+        model.addAttribute("seo_title", "Blokni boshqarish");
+
+        return "/blocks/manage";
     }
 
-    @PostMapping("/update/{id}")
-    public String updateBlock(@PathVariable String id, @ModelAttribute Block block) {
-        // Mavjud blokni tahrirlash (content o'zgarganda)
-        return "redirect:/lessons/view";
+    @GetMapping("/create/{lessonId}")
+    public String createBlocks(@PathVariable("lessonId") String lessonId, Model model) {
+        model.addAttribute("lessonId", lessonId);
+        model.addAttribute("seo_title", "Blokni boshqarish");
+
+        return "/blocks/create";
     }
+
+    @PostMapping("/save")
+    public String saveBlock(@ModelAttribute CreateAndEditBlockDto blockDto) {
+        blockService.saveBlock(blockDto);
+
+        return "redirect:/blocks/manage/" + blockDto.getLessonId();
+    }
+
+    @GetMapping("/edit/{blockId}")
+    public String editBlock(@PathVariable("blockId") String blockId, Model model) {
+        Block block = blockService.getBlockById(blockId);
+
+        model.addAttribute("blockId", blockId);
+        model.addAttribute("block", block);
+
+        return "/blocks/edit";
+    }
+
+    @PostMapping("/update")
+    public  String updateBlock(@ModelAttribute CreateAndEditBlockDto blockDto) {
+
+
+        return "redirect:/blocks/manage/" + blockDto.getLessonId();
+    }
+
 }

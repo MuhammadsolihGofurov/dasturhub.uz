@@ -21,13 +21,15 @@ public class Block {
     @Column(name="title")
     private String title;
 
-    @Column(name="content")
+    @Column(name="content", columnDefinition = "TEXT")
     private String content;
+
+    @Column(name="order_number")
+    private Integer order;
 
     @Column(name="block_type")
     @Enumerated(EnumType.STRING)
     private BlockType blockType;
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lesson_id")

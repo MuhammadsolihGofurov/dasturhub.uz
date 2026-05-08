@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="uz" x-data="{ darkMode: false }" :class="{ 'dark': darkMode }">
+<head th:replace="~{fragments/head :: myHead}">
+    <title>Yangi Kurs — DasturHub</title>
+</head>
+<body class="bg-[#fcfcfc] dark:bg-[#050505] text-slate-900 dark:text-slate-100">
+
+<div th:replace="~{fragments/header :: myHeader('blocks_manage')}"></div>
+
+<main class="pt-24 pb-20">
+    <div class="max-w-3xl mx-auto px-6">
+
+        <div class="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-4">
+            <a th:href="@{/blocks/manage/{id}(id=${lessonId})}" class="hover:text-brand-500 transition">Bloklar</a>
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg>
+            <span class="text-slate-900 dark:text-white">Yangi yaratish</span>
+        </div>
+
+        <h1 th:text="${block?.title + ' ' + 'tahrirlash'}" class="text-3xl font-800 tracking-tighter uppercase dark:text-white mb-10">Darsni tahrirlash</h1>
+
+        <form th:action="@{/blocks/update/{id}/{lessonId}(id=${block.id}, lessonId=${lessonId})}" method="post" class="space-y-8">
+
+            <input type="hidden" name="sectionId" th:value="${lessonId}" />
+
+            <div class="space-y-2">
+                <label class="text-[11px] font-bold uppercase tracking-widest text-slate-500">Blok nomi</label>
+                <input type="text" name="title" th:value="${block.title}" required
+                       class="w-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl px-5 py-4 focus:border-brand-500 outline-none">
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-[11px] font-bold uppercase tracking-widest text-slate-500">Blok turi</label>
+                <div class="relative">
+                    <select name="blockType"
+                            th:value="${block.blockType}"
+                            class="w-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all appearance-none cursor-pointer">
+                        <option value="TEXT" selected>TEXT</option>
+                        <option value="QUIZ">QUIZ</option>
+                        <option value="IMAGE">IMAGE</option>
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-5 text-slate-400">
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-[11px] font-bold uppercase tracking-widest text-slate-500">Blok tartib raqami</label>
+                <input type="text" name="order" th:value="${block.order}" required
+                       class="w-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl px-5 py-4 focus:border-brand-500 outline-none">
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-[11px] font-bold uppercase tracking-widest text-slate-500">Kontent</label>
+                <div class="dark:text-slate-900"> <textarea id="editor" th:text="${block.content}" name="content" placeholder="Kontentni to'liq kiriting..."></textarea>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button type="submit" class="flex-1 bg-brand-500 text-white font-800 uppercase py-5 rounded-2xl shadow-xl shadow-brand-500/20">
+                    O'zgarishlarni saqlash
+                </button>
+                <a th:href="@{/blocks/manage/{id}(id=${lessonId})}" class="px-8 py-5 border border-slate-200 dark:border-white/10 rounded-2xl text-[11px] font-bold uppercase">
+                    Bekor qilish
+                </a>
+            </div>
+        </form>
+
+    </div>
+</main>
+
+<div th:replace="~{fragments/footer :: myFooter}"></div>
+
+
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.0.0/classic/ckeditor.js"></script>
+
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'), {
+                // Toolbar - barcha kerakli funksiyalar bilan
+                toolbar: {
+                    items: [
+                        'heading', '|',
+                        'bold', 'italic', 'underline', 'strikethrough', 'link', '|',
+                        'bulletedList', 'numberedList', 'blockQuote', '|',
+                        'alignment', 'outdent', 'indent', '|',
+                        'insertTable', 'mediaEmbed', 'codeBlock', '|',
+                        'undo', 'redo'
+                    ]
+                },
+                // Jadvallar uchun kengaytirilgan boshqaruv
+                table: {
+                    contentToolbar: [
+                        'tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties', 'tableCellProperties'
+                    ]
+                },
+                language: 'uz'
+            })
+            .then(editor => {
+                const form = document.querySelector('form');
+                form.addEventListener('submit', () => {
+                    document.querySelector('#editor').value = editor.getData();
+                });
+            })
+            .catch(error => {
+                console.error('Xatolik yuz berdi:', error);
+            });
+    </script>
+
+    <style>
+        /* Editor balandligini moslash va borderlarni yumshatish */
+        .ck-editor__editable_inline {
+            min-height: 300px;
+            border-bottom-left-radius: 1rem !important;
+            border-bottom-right-radius: 1rem !important;
+        }
+        .ck-editor__top {
+            border-top-left-radius: 1rem !important;
+            border-top-right-radius: 1rem !important;
+        }
+        .ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
+            border-color: #e2e8f0;
+        }
+    </style>
+</body>
+</html>

@@ -2,12 +2,12 @@ package dasturhub.uz.services.course;
 
 import dasturhub.uz.dtos.course.CreateAndEditCourseDto;
 import dasturhub.uz.entity.Course;
+import dasturhub.uz.entity.Lesson;
 import dasturhub.uz.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class CourseService implements ICourseService {
@@ -55,4 +55,12 @@ public class CourseService implements ICourseService {
     public void deleteCourse(String id) {
         courseRepository.deleteById(id);
     }
+
+    @Override
+    public List<Lesson> getAllLessonsSorted(Course course) {
+        return course.getSections().stream()
+                .flatMap(section -> section.getLessons().stream())
+                .toList();
+    }
+
 }

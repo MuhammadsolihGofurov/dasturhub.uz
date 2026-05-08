@@ -33,6 +33,7 @@ public class Lesson {
 
     //  here blocks
     @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("order ASC")
     private List<Block> blocks;
 
     @Column(name="created_at", updatable = false)

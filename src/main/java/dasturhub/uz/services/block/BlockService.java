@@ -43,4 +43,19 @@ public class BlockService implements IBlockService {
     public Block getBlockById(String blockId) {
         return blockRepository.findById(blockId).orElseThrow(() -> new RuntimeException("Block not found"));
     }
+
+    @Override
+    public void updateBlockById(String blockId, CreateAndEditBlockDto blockDto) {
+        Block block = getBlockById(blockId);
+        block.setTitle(blockDto.getTitle());
+        block.setContent(blockDto.getContent());
+        block.setOrder(blockDto.getOrder());
+        block.setBlockType(BlockType.valueOf(blockDto.getBlockType()));
+        blockRepository.save(block);
+    }
+
+    @Override
+    public void deleteBlockById(String blockId) {
+        blockRepository.deleteById(blockId);
+    }
 }

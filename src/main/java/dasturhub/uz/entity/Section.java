@@ -33,6 +33,7 @@ public class Section {
 
     //  here lessons
     @OneToMany(mappedBy = "section", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("order ASC")
     private List<Lesson> lessons;
 
     @Column(name = "created_at", updatable = false)

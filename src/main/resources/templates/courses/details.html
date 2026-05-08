@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="uz" xmlns:th="http://www.thymeleaf.org" x-data="{ darkMode: false }" :class="{ 'dark': darkMode }">
+<html lang="uz" xmlns:th="http://www.thymeleaf.org"
+      x-data="{ ...themeHandler(), mobileMenuOpen: false }"
+      :class="{ 'dark': darkMode }">
 <head th:replace="~{fragments/head :: myHead}"></head>
 
 <body class="bg-white dark:bg-[#0f172a] text-slate-600 dark:text-slate-400 font-sans antialiased">
@@ -8,72 +10,111 @@
 
 <div class="max-w-7xl mx-auto px-6 flex">
 
-    <!-- Sidebar (Laravel Docs Style) -->
     <aside class="hidden lg:block w-64 fixed h-[calc(100vh-4rem)] pt-24 overflow-y-auto border-r border-slate-100 dark:border-slate-800/50">
         <nav class="space-y-8 pr-6 pb-10">
             <div>
-                <h5 class="text-[11px] font-bold text-slate-900 dark:text-white uppercase tracking-widest mb-4">Mundarija</h5>
-                <ul class="space-y-3 border-l border-slate-100 dark:border-slate-800">
-                    <li><a href="#" class="block pl-4 -ml-px border-l border-brand-500 text-brand-500 font-semibold">Kirish</a></li>
-                    <li><a href="#" class="block pl-4 -ml-px border-l border-transparent hover:border-slate-400 transition">Asosiy tushunchalar</a></li>
-                    <li><a href="#" class="block pl-4 -ml-px border-l border-transparent hover:border-slate-400 transition">Loyihani sozlash</a></li>
-                </ul>
-            </div>
-            <div>
-                <h5 class="text-[11px] font-bold text-slate-900 dark:text-white uppercase tracking-widest mb-4">Darslar</h5>
-                <ul class="space-y-3 border-l border-slate-100 dark:border-slate-800">
-                    <li><a href="#" class="block pl-4 -ml-px border-l border-transparent hover:border-slate-400 transition">1. Muhitni tayyorlash</a></li>
-                    <li><a href="#" class="block pl-4 -ml-px border-l border-transparent hover:border-slate-400 transition">2. Spring Initializr</a></li>
-                    <li><a href="#" class="block pl-4 -ml-px border-l border-transparent hover:border-slate-400 transition">3. Controllerlar bilan ishlash</a></li>
-                </ul>
+                <h5 class="text-[11px] font-bold text-slate-900 dark:text-white uppercase tracking-widest mb-4 px-4">Kurs Mundarijasi</h5>
+
+                <div th:each="section : ${course.sections}" class="mb-6">
+                    <h4 th:text="${section.title}"
+                        class="text-[11px] font-bold uppercase text-slate-400 dark:text-slate-500 px-4 mb-2">
+                    </h4>
+
+                    <ul class="border-l border-slate-100 dark:border-slate-800 ml-4">
+                        <li th:each="lesson : ${section.lessons}">
+                            <a th:href="@{/courses/{cId}/lessons/{lId}(cId=${course.id}, lId=${lesson.id})}"
+                               th:text="${lesson.title}"
+                               th:classappend="${currentLesson != null && lesson.id == currentLesson.id}
+                                               ? 'border-brand-500 text-brand-500 font-semibold bg-brand-50/50 dark:bg-brand-500/5'
+                                               : 'border-transparent hover:border-slate-300 hover:text-slate-900 dark:hover:text-white'"
+                               class="block pl-4 -ml-px border-l-2 py-2 transition-all text-sm">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </aside>
 
-    <!-- Main Content Area -->
     <main class="flex-1 lg:ml-64 pt-24 pb-16 px-4 md:px-12 lg:px-10">
-        <header class="mb-10">
-            <p class="text-brand-500 font-bold text-sm mb-2 uppercase tracking-widest">Backend Development</p>
-            <h1 class="text-4xl md:text-5xl font-800 text-slate-900 dark:text-white tracking-tight mb-4">Java Spring Boot: Enterprise</h1>
-            <div class="h-1 w-20 bg-brand-500 rounded-full"></div>
-        </header>
 
-        <article class="prose prose-slate dark:prose-invert max-w-none space-y-6">
-            <p class="text-lg leading-relaxed">Ushbu kurs davomida siz zamonaviy backend tizimlarini qurishning barcha bosqichlarini o'rganasiz. Biz faqat kod yozishni emas, balki arxitekturani to'g'ri qurishni o'rgatamiz.</p>
+        <div th:if="${currentLesson != null}">
+            <header class="mb-10">
+                <nav class="flex text-[10px] font-bold text-slate-400 mb-4 uppercase tracking-[0.2em]">
+                    <a href="/courses" class="hover:text-brand-500 transition-colors">Kurslar</a>
+                    <span class="mx-2 text-slate-300">/</span>
+                    <a th:href="@{/courses/details/{id}(id=${course.id})}" th:text="${course.title}" class="hover:text-brand-500 transition-colors">Kurs nomi</a>
+                </nav>
+                <h1 th:text="${currentLesson.title}" class="text-3xl md:text-4xl font-800 text-slate-900 dark:text-white tracking-tight mb-4">
+                    Dars nomi
+                </h1>
+                <div class="h-1.5 w-20 bg-brand-500 rounded-full shadow-lg shadow-brand-500/20"></div>
+            </header>
 
-            <h2 class="text-2xl font-bold text-slate-900 dark:text-white mt-12 mb-4 border-b border-slate-100 dark:border-slate-800 pb-2">Kurs nimalarni o'z ichiga oladi?</h2>
-            <ul class="list-disc pl-5 space-y-3">
-                <li>Spring Framework ekotizimi</li>
-                <li>RESTful API dizayni va xavfsizligi</li>
-                <li>PostgreSQL va Hibernate bilan ishlash</li>
-                <li>Docker va Mikroxizmatlar asoslari</li>
-            </ul>
+            <article class="prose prose-slate dark:prose-invert max-w-none mb-16">
+                <div th:each="block : ${currentLesson.blocks}">
 
-            <div class="p-6 bg-slate-50 dark:bg-slate-800/50 border-l-4 border-brand-500 rounded-r-xl my-10">
-                <p class="text-sm italic font-medium">"Ushbu kursni tamomlagandan so'ng, siz mustaqil ravishda murakkab enterprise darajasidagi loyihalarni boshqara olasiz."</p>
-            </div>
+                    <div th:if="${block.blockType.name() == 'TEXT'}"
+                         th:utext="${block.content}"
+                         class="html-content mb-10">
+                    </div>
 
-            <h2 class="text-2xl font-bold text-slate-900 dark:text-white mt-12 mb-4">Talablar</h2>
-            <p>Ushbu kursni boshlash uchun sizdan quyidagilar talab qilinadi:</p>
-            <pre class="bg-slate-900 text-slate-300 p-6 rounded-xl overflow-x-auto text-sm leading-relaxed">
-- Java Core bilimlar (OOP, Collections)
-- Ma'lumotlar bazasi asoslari (SQL)
-- Kompyuterda JDK 17+ o'rnatilgan bo'lishi</pre>
-        </article>
+                    <figure th:if="${block.blockType.name() == 'IMAGE'}" class="my-10">
+                        <img th:src="${block.fileUrl}"
+                             class="rounded-2xl shadow-2xl border border-slate-100 dark:border-white/5 w-full"
+                             th:alt="${currentLesson.title}">
+                    </figure>
 
-        <!-- Pagination Buttons -->
-        <div class="mt-16 pt-8 border-t border-slate-100 dark:border-slate-800 flex justify-between">
-            <div class="group">
-                <p class="text-xs text-slate-400 mb-1">Oldingi dars</p>
-                <a href="#" class="text-brand-500 font-bold hover:underline">← Akademiyaga kirish</a>
-            </div>
-            <div class="group text-right">
-                <p class="text-xs text-slate-400 mb-1">Keyingi dars</p>
-                <a href="#" class="text-brand-500 font-bold hover:underline">Spring Boot nima? →</a>
+                    <div th:if="${block.blockType.name() == 'QUIZ'}"
+                         class="my-12 p-10 bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 rounded-[2rem] text-center">
+                        <div class="w-16 h-16 bg-brand-500/10 text-brand-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Bilimingizni sinab ko'ring</h3>
+                        <p class="text-slate-500 mb-8 max-w-xs mx-auto text-sm">Ushbu dars yakuni bo'yicha kichik test tayyorlangan.</p>
+                        <button class="bg-brand-500 text-white px-10 py-4 rounded-full font-800 text-[11px] uppercase tracking-widest hover:bg-brand-600 transition shadow-xl shadow-brand-500/25">
+                            Testni boshlash
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-16 pt-10 border-t border-slate-100 dark:border-white/5">
+                <div>
+                    <a th:if="${prevLesson != null}"
+                       th:href="@{/courses/{cId}/lessons/{lId}(cId=${course.id}, lId=${prevLesson.id})}"
+                       class="group flex flex-col p-6 rounded-3xl border border-slate-100 dark:border-white/5 hover:border-brand-500/50 hover:bg-brand-50/30 dark:hover:bg-brand-500/5 transition-all duration-300">
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400 group-hover:text-brand-500 mb-2 transition-colors">Oldingi dars</span>
+                        <span th:text="${prevLesson.title}" class="text-slate-900 dark:text-white font-bold group-hover:translate-x-[-4px] transition-transform">Dars nomi</span>
+                    </a>
+                </div>
+                <div class="text-right">
+                    <a th:if="${nextLesson != null}"
+                       th:href="@{/courses/{cId}/lessons/{lId}(cId=${course.id}, lId=${nextLesson.id})}"
+                       class="group flex flex-col p-6 rounded-3xl border border-slate-100 dark:border-white/5 hover:border-brand-500/50 hover:bg-brand-50/30 dark:hover:bg-brand-500/5 transition-all duration-300">
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400 group-hover:text-brand-500 mb-2 transition-colors">Keyingi dars</span>
+                        <span th:text="${nextLesson.title}" class="text-slate-900 dark:text-white font-bold group-hover:translate-x-[4px] transition-transform">Dars nomi</span>
+                    </a>
+                </div>
             </div>
         </div>
-    </main>
 
+        <div th:if="${currentLesson == null}" class="py-12">
+            <h1 th:text="${course.title}" class="text-5xl font-800 text-slate-900 dark:text-white tracking-tighter mb-6"></h1>
+            <p th:text="${course.description}" class="text-xl leading-relaxed text-slate-500 dark:text-slate-400 mb-10 max-w-3xl"></p>
+
+            <div class="flex items-center gap-4 p-6 bg-brand-50 dark:bg-brand-500/5 rounded-3xl border border-brand-100 dark:border-brand-500/10">
+                <div class="w-12 h-12 bg-brand-500 text-white rounded-2xl flex items-center justify-center shadow-lg shadow-brand-500/20">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
+                </div>
+                <div>
+                    <p class="font-bold text-slate-900 dark:text-white">O'rganishni boshlang</p>
+                    <p class="text-sm text-slate-500">Chap tomondagi mundarijadan birinchi darsni tanlang.</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
 </div>
 
 </body>

@@ -2,6 +2,7 @@ package dasturhub.uz.services.course;
 
 import dasturhub.uz.dtos.course.CreateAndEditCourseDto;
 import dasturhub.uz.entity.Course;
+import dasturhub.uz.entity.Lesson;
 
 import java.util.List;
 
@@ -17,4 +18,5 @@ public interface ICourseService {
 
     public void deleteCourse(String id);
 
+    List<Lesson> getAllLessonsSorted(Course course);
 }

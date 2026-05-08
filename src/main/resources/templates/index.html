@@ -39,7 +39,10 @@
                             <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Dasturlash</span>
                         </div>
                         <h3 th:text="${course?.title}" class="text-xl font-bold dark:text-white mb-2 group-hover:text-brand-500 transition">Java Spring Boot: Enterprise</h3>
-                        <p th:text="${course?.price}" class="text-[15px] font-bold text-brand-500">Teppa tekin</p>
+                        <p class="text-[15px] font-bold text-brand-500"
+                           th:text="${course.price == 0 ? 'Bepul kurs' : course.price + ' UZS'}">
+                            1,200,000 UZS
+                        </p>
                     </div>
                     <!-- Hover Effect Line -->
                     <div class="absolute -bottom-4 left-0 w-0 h-[2px] bg-brand-500 transition-all duration-500 group-hover:w-full"></div>

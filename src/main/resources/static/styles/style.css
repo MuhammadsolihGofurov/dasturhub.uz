@@ -1,0 +1,164 @@
+/* --- HTML Content Styling (Standard CSS) --- */
+
+.html-content {
+    line-height: 1.8;
+    color: #475569; /* slate-600 */
+    font-size: 17px;
+}
+
+/* Dark mode uchun */
+.dark .html-content {
+    color: #cbd5e1; /* slate-300 */
+}
+
+/* Sarlavhalar */
+.html-content h1, .html-content h2, .html-content h3,
+.html-content h4, .html-content h5, .html-content h6 {
+    font-weight: 700;
+    color: #0f172a; /* slate-900 */
+    margin-top: 2.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.dark .html-content h1, .dark .html-content h2, .dark .html-content h3,
+.dark .html-content h4, .dark .html-content h5, .dark .html-content h6 {
+    color: #ffffff;
+}
+
+.html-content h1 { font-size: 2.25rem; }
+.html-content h2 {
+    font-size: 1.5rem;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 0.75rem;
+}
+.dark .html-content h2 { border-color: rgba(255, 255, 255, 0.1); }
+.html-content h3 { font-size: 1.25rem; }
+
+/* Paragraf va Linklar */
+.html-content p { margin-bottom: 1.5rem; }
+.html-content a {
+    color: #3b82f6;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+.html-content a:hover { color: #2563eb; }
+
+/* Ro'yxatlar */
+.html-content ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; }
+.html-content ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1.5rem; }
+.html-content li { margin-bottom: 0.5rem; }
+/* Blockquote - Muhim eslatmalar yoki maslahatlar uchun */
+.html-content blockquote {
+    padding: 1.5rem 2rem;
+    margin: 2.5rem 0;
+
+    /* Chap chiziqni qalinroq va yorqinroq qilamiz */
+    border-left: 6px solid #3b82f6;
+
+    /* Orqa fon ko'proq ajralib turishi uchun (Light mode) */
+    background-color: #eff6ff; /* Juda och ko'k rang */
+
+    font-style: normal; /* Kod yozilsa, italic bo'lmagani ma'qul */
+    border-radius: 0.5rem 1rem 1rem 0.5rem;
+
+    /* Bir oz soya qo'shamiz */
+    box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.1);
+    position: relative;
+}
+
+/* Dark mode uchun */
+.dark .html-content blockquote {
+    /* To'qroq va ajralib turadigan ko'k fon */
+    background-color: rgba(59, 130, 246, 0.1);
+    border-left-color: #60a5fa;
+    box-shadow: inset 0 0 0 1px rgba(96, 165, 250, 0.2);
+}
+
+/* Blockquote ichidagi matn stili */
+.html-content blockquote p {
+    margin-bottom: 0 !important; /* Oxirgi paragraf orasini ochib yubormasligi uchun */
+    color: #1e40af; /* To'q ko'k matn */
+    font-weight: 500;
+}
+
+.dark .html-content blockquote p {
+    color: #93c5fd; /* Och ko'k matn */
+}
+
+/* Agar blockquote ichida code ishlatilsa, uni ham moslaymiz */
+.html-content blockquote code {
+    background-color: rgba(255, 255, 255, 0.5) !important;
+    color: #1d4ed8 !important;
+}
+
+.dark .html-content blockquote code {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+    color: #60a5fa !important;
+}
+/* Jadvallar */
+.html-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.9rem;
+}
+.html-content th {
+    background-color: #f8fafc;
+    font-weight: 700;
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0;
+}
+.dark .html-content th {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+.html-content td {
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0;
+}
+.dark .html-content td { border-color: rgba(255, 255, 255, 0.1); }
+
+/* Kodlar */
+.html-content code:not(pre code) {
+    background-color: #f1f5f9;
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    font-family: monospace;
+    color: #e11d48;
+}
+.dark .html-content code:not(pre code) {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.html-content pre {
+    background-color: #0f172a;
+    color: #e2e8f0;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    overflow-x: auto;
+    margin: 2rem 0;
+}
+
+/* Media */
+.html-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.75rem;
+    margin: 2rem auto;
+    display: block;
+}
+
+.html-content iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 1rem;
+    margin: 2rem 0;
+}
+
+.html-content hr {
+    margin: 3rem 0;
+    border: 0;
+    border-top: 1px solid #e2e8f0;
+}
+.dark .html-content hr { border-color: rgba(255, 255, 255, 0.1); }

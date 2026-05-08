@@ -11,7 +11,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
 
             <div th:each="course : ${courses}" class="group relative">
-                <a th:href="@{/courses/details}">
+                <a th:href="@{/courses/details/{courseId}(courseId=${course.id})}">
                     <div class="overflow-hidden bg-slate-100 dark:bg-white/5 aspect-[16/10] mb-6 rounded-2xl">
                         <img th:src="${course.imageUrl}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
                     </div>
@@ -21,7 +21,10 @@
                             <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Dasturlash</span>
                         </div>
                         <h3 th:text="${course.title}" class="text-xl font-bold dark:text-white mb-2 group-hover:text-brand-500 transition">Java Spring Boot: Enterprise</h3>
-                        <p th:text="${course.price}" class="text-[15px] font-bold text-brand-500">1,200,000 UZS</p>
+                        <p class="text-[15px] font-bold text-brand-500"
+                           th:text="${course.price == 0 ? 'Bepul kurs' : course.price + ' UZS'}">
+                            1,200,000 UZS
+                        </p>
                     </div>
                 </a>
                 <div class="absolute -bottom-4 left-0 w-0 h-[2px] bg-brand-500 transition-all duration-500 group-hover:w-full"></div>

@@ -1,5 +1,5 @@
 <header th:fragment="myHeader(page)"
-        x-data="{ mobileMenuOpen: false }"
+        x-data="{ ...themeHandler(), mobileMenuOpen: false }"
         class="fixed top-0 w-full z-50 bg-white/80 dark:bg-[#050505]/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/5">
 
     <div class="max-w-7xl mx-auto px-4 3xl:px-0">

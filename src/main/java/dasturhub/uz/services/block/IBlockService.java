@@ -11,4 +11,8 @@ public interface IBlockService {
     void saveBlock(CreateAndEditBlockDto blockDto);
 
     Block getBlockById(String blockId);
+
+    void updateBlockById(String blockId, CreateAndEditBlockDto blockDto);
+
+    void deleteBlockById(String blockId);
 }

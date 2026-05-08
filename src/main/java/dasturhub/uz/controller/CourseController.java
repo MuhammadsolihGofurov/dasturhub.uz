@@ -1,6 +1,7 @@
 package dasturhub.uz.controller;
 
 import dasturhub.uz.dtos.course.CreateAndEditCourseDto;
+import dasturhub.uz.entity.Lesson;
 import dasturhub.uz.services.course.CourseService;
 import org.springframework.ui.Model;
 import dasturhub.uz.entity.Course;
@@ -37,12 +38,52 @@ public class CourseController {
         return "courses";
     }
 
-    @GetMapping("/{id}")
-    public String getCourseDetails(@PathVariable String id, Model model) {
+    @GetMapping("/details/{courseId}")
+    public String getCourseDetails(@PathVariable String courseId, Model model) {
+        Course course = courseService.getCourseById(courseId);
+        model.addAttribute("course", course);
 
+        // Agar dars tanlanmagan bo'lsa, xato bermasligi uchun null dars obyektlarini yuboramiz
+        model.addAttribute("currentLesson", null);
+        model.addAttribute("prevLesson", null);
+        model.addAttribute("nextLesson", null);
 
         return "courses/details";
     }
+
+    // DARSLAR UCHUN YANGI METOD
+    @GetMapping("/{courseId}/lessons/{lessonId}")
+    public String getLessonDetails(@PathVariable String courseId,
+                                   @PathVariable String lessonId,
+                                   Model model) {
+        Course course = courseService.getCourseById(courseId);
+
+        // Barcha darslarni tartiblangan holda olamiz
+        List<Lesson> allLessons = courseService.getAllLessonsSorted(course);
+
+        // Hozirgi darsni topamiz
+        Lesson currentLesson = allLessons.stream()
+                .filter(l -> l.getId().equals(lessonId))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Dars topilmadi"));
+
+        int currentIndex = allLessons.indexOf(currentLesson);
+
+        // Oldingi va keyingi darslarni aniqlaymiz
+        Lesson prevLesson = (currentIndex > 0) ? allLessons.get(currentIndex - 1) : null;
+        Lesson nextLesson = (currentIndex < allLessons.size() - 1) ? allLessons.get(currentIndex + 1) : null;
+
+        model.addAttribute("course", course);
+        model.addAttribute("currentLesson", currentLesson);
+        model.addAttribute("prevLesson", prevLesson);
+        model.addAttribute("nextLesson", nextLesson);
+
+        // SEO
+        model.addAttribute("seo_title", currentLesson.getTitle());
+
+        return "courses/details";
+    }
+
 
     // === for admin ===
     @GetMapping("/manage")

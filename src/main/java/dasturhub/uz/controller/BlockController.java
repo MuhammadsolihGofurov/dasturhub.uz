@@ -56,15 +56,22 @@ public class BlockController {
 
         model.addAttribute("blockId", blockId);
         model.addAttribute("block", block);
+        model.addAttribute("lessonId", block.getLesson().getId());
 
         return "/blocks/edit";
     }
 
-    @PostMapping("/update")
-    public  String updateBlock(@ModelAttribute CreateAndEditBlockDto blockDto) {
+    @PostMapping("/update/{blockId}/{lessonId}")
+    public  String updateBlock(@ModelAttribute CreateAndEditBlockDto blockDto, @PathVariable String blockId, @PathVariable String lessonId) {
+        blockService.updateBlockById(blockId, blockDto);
 
+        return "redirect:/blocks/manage/" + lessonId;
+    }
 
-        return "redirect:/blocks/manage/" + blockDto.getLessonId();
+    @DeleteMapping("/api/manage/{blockId}")
+    @ResponseBody
+    public void deleteBlock(@PathVariable("blockId") String blockId) {
+        blockService.deleteBlockById(blockId);
     }
 
 }

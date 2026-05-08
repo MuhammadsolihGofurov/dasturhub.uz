@@ -30,6 +30,7 @@ public class Course {
 
     // here sections
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("order ASC")
     private List<Section> sections;
 
     @Column(name = "created_at", updatable = false)

@@ -11,7 +11,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
 
             <div th:each="course : ${courses}" class="group relative">
-                <a th:href="@{/courses/details/{courseId}(courseId=${course.id})}">
+                <a th:href="@{/courses/learn/details/{courseId}(courseId=${course.id})}">
                     <div class="overflow-hidden bg-slate-100 dark:bg-white/5 aspect-[16/10] mb-6 rounded-2xl">
                         <img th:src="${course.imageUrl}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
                     </div>

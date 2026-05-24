@@ -38,7 +38,7 @@ public class CourseController {
         return "courses";
     }
 
-    @GetMapping("/details/{courseId}")
+    @GetMapping("/learn/details/{courseId}")
     public String getCourseDetails(@PathVariable String courseId, Model model) {
         Course course = courseService.getCourseById(courseId);
         model.addAttribute("course", course);
@@ -48,11 +48,11 @@ public class CourseController {
         model.addAttribute("prevLesson", null);
         model.addAttribute("nextLesson", null);
 
-        return "courses/details";
+        return "courses/learn/details";
     }
 
     // DARSLAR UCHUN YANGI METOD
-    @GetMapping("/{courseId}/lessons/{lessonId}")
+    @GetMapping("/learn/details/{courseId}/lessons/{lessonId}")
     public String getLessonDetails(@PathVariable String courseId,
                                    @PathVariable String lessonId,
                                    Model model) {
@@ -81,7 +81,7 @@ public class CourseController {
         // SEO
         model.addAttribute("seo_title", currentLesson.getTitle());
 
-        return "courses/details";
+        return "courses/learn/details";
     }
 
 

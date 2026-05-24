@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="uz" x-data="{ darkMode: false, passwordVisible: false }" :class="{ 'dark': darkMode }">
+<head th:replace="~{fragments/head :: myHead}">
+    <title>Ro'yxatdan o'tish — DasturHub</title>
+</head>
+<body class="bg-[#fcfcfc] dark:bg-[#050505] text-slate-900 dark:text-slate-100">
+
+<div th:replace="~{fragments/header :: myHeader('register')}"></div>
+
+<main class="pt-24 pb-20 flex items-center justify-center min-h-[85vh]">
+    <div class="w-full max-w-md mx-auto px-6">
+
+        <div class="text-center mb-10">
+            <div class="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.3em] text-brand-500 mb-3">
+                <span>DasturHub platformasi</span>
+            </div>
+            <h1 class="text-3xl font-800 tracking-tighter uppercase dark:text-white mb-2">Hisob yaratish</h1>
+            <p class="text-xs text-slate-400 dark:text-slate-500 tracking-wide">Kurslarni boshlash va bilimingizni oshirish uchun ro'yxatdan o'ting</p>
+        </div>
+
+        <div th:if="${param.error}" class="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-500 text-xs font-medium tracking-wide flex items-center gap-3">
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            <span th:text="${errorMessage ?: 'Bunday foydalanuvchi nomi band yoki ma\'lumotlar xato kiridildi.'}">Xatolik yuz berdi.</span>
+        </div>
+
+        <form th:action="@{/auth/register}" th:object="${registerDto}" method="post" class="space-y-6">
+
+            <div class="space-y-2">
+                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 block">Ism va familiya</label>
+                <div class="relative">
+                    <input type="text" th:field="*{fullName}" required autocomplete="name"
+                           placeholder="Masalan: Muhammadsolih G'ofurov"
+                           class="w-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl pl-5 pr-12 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all placeholder:text-slate-300 dark:placeholder:text-slate-700">
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 block">Foydalanuvchi nomi (Username)</label>
+                <div class="relative">
+                    <input type="text" th:field="*{username}" required autocomplete="username"
+                           placeholder="Masalan: muhammad_solih"
+                           class="w-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl pl-5 pr-12 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all placeholder:text-slate-300 dark:placeholder:text-slate-700">
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 block">Parol</label>
+                <div class="relative">
+                    <input :type="passwordVisible ? 'text' : 'password'" th:field="*{password}" required autocomplete="new-password"
+                           placeholder="••••••••"
+                           class="w-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl pl-5 pr-12 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all placeholder:text-slate-300 dark:placeholder:text-slate-700">
+
+                    <button type="button" @click="passwordVisible = !passwordVisible"
+                            class="absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-brand-500 transition-colors focus:outline-none">
+                        <svg x-show="!passwordVisible" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                        <svg x-show="passwordVisible" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18"></path></svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="pt-2">
+                <button type="submit"
+                        class="w-full bg-brand-500 hover:bg-brand-600 text-white font-800 uppercase tracking-[0.2em] text-[11px] py-5 rounded-2xl transition-all shadow-xl shadow-brand-500/20 active:scale-[0.98]">
+                    Ro'yxatdan o'tish
+                </button>
+            </div>
+
+            <div class="text-center pt-2">
+                <p class="text-xs text-slate-400 dark:text-slate-500">
+                    Profilingiz bormi?
+                    <a href="/auth/login" class="text-brand-500 hover:underline font-bold ml-1 tracking-wide">Tizimga kirish</a>
+                </p>
+            </div>
+        </form>
+    </div>
+</main>
+
+<div th:replace="~{fragments/footer :: myFooter}"></div>
+
+</body>
+</html>

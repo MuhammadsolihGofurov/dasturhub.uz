@@ -1,11 +1,11 @@
 <header th:fragment="myHeader(page)"
         x-data="{ ...themeHandler(), mobileMenuOpen: false }"
-        class="fixed top-0 w-full z-50 bg-white/80 dark:bg-[#050505]/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/5">
+        class="fixed top-0 w-full z-50 bg-white/80 dark:bg-[#050505]/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/5"
+        xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:x-transition="http://www.w3.org/1999/xhtml">
 
     <div class="max-w-7xl mx-auto px-4 3xl:px-0">
         <div class="flex items-center justify-between h-16">
 
-            <!-- 1. Logo -->
             <a href="/" class="group flex items-center gap-2 relative z-50">
                 <div class="w-2 h-2 bg-brand-500 rounded-full group-hover:scale-150 transition-transform duration-300"></div>
                 <span class="text-xl font-800 tracking-tighter uppercase dark:text-white">
@@ -13,7 +13,6 @@
                 </span>
             </a>
 
-            <!-- 2. Desktop Navigation (Hidden on Mobile) -->
             <nav class="hidden md:flex items-center gap-8 text-[11px] font-bold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
                 <a href="/courses"
                    th:classappend="${page == 'courses' ? 'text-brand-500' : 'text-slate-500'}"
@@ -28,10 +27,8 @@
                    class="hover:text-brand-500 transition-colors">Blog</a>
             </nav>
 
-            <!-- 3. Actions (Theme + Auth + Mobile Toggle) -->
             <div class="flex items-center gap-2 sm:gap-4 relative z-50">
 
-                <!-- Dark Mode Toggle -->
                 <button @click="darkMode = !darkMode" class="p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-full transition-colors">
                     <svg x-show="!darkMode" class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
                     <svg x-show="darkMode" class="w-5 h-5 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 9H3m3.343-5.657l-.707.707m12.728 12.728l-.707.707M6.343 17.657l-.707-.707M17.657 6.343l-.707-.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
@@ -39,13 +36,25 @@
 
                 <div class="hidden sm:block h-4 w-[1px] bg-slate-200 dark:bg-white/10 mx-1"></div>
 
-                <!-- Auth Buttons (Desktop) -->
-                <div class="hidden md:flex items-center gap-6">
-                    <button type="button" onclick="handleSoon()" class="text-[11px] font-bold uppercase tracking-widest hover:text-brand-500 transition-colors">Kirish</button>
-                    <button type="button" onclick="handleSoon()" class="bg-brand-500 text-white px-5 py-2.5 rounded-full text-[10px] font-800 uppercase tracking-widest hover:bg-brand-600 transition shadow-lg shadow-brand-500/20">A'zo bo'lish</button>
+                <div sec:authorize="!isAuthenticated()" class="hidden md:flex items-center gap-6">
+                    <a th:href="@{/auth/login}" type="button" class="text-[11px] font-bold uppercase tracking-widest hover:text-brand-500 transition-colors">Kirish</a>
+                    <a th:href="@{/auth/register}" type="button" class="bg-brand-500 text-white px-5 py-2.5 rounded-full text-[10px] font-800 uppercase tracking-widest hover:bg-brand-600 transition shadow-lg shadow-brand-500/20">A'zo bo'lish</a>
                 </div>
 
-                <!-- Mobile Menu Toggle (Hamburger) -->
+                <div sec:authorize="isAuthenticated()" class="hidden md:flex items-center gap-4 text-left">
+                    <div class="flex flex-col">
+                        <span class="text-[11px] font-extrabold dark:text-white uppercase tracking-wider"
+                              sec:authentication="principal.profile.fullName">Ism Familiya</span>
+
+                        <a sec:authorize="hasRole('ADMIN')" href="/admin/dashboard"
+                           class="text-[9px] text-brand-500 font-bold uppercase tracking-widest hover:underline">Admin Panel</a>
+                    </div>
+
+                    <a th:href="@{/logout}" class="p-2 text-slate-400 hover:text-red-500 rounded-xl transition-colors" title="Tizimdan chiqish">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                    </a>
+                </div>
+
                 <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden p-2 text-slate-600 dark:text-slate-300">
                     <svg x-show="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                     <svg x-show="mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -54,7 +63,6 @@
         </div>
     </div>
 
-    <!-- 4. Mobile Menu Overlay -->
     <div x-show="mobileMenuOpen"
          class="md:hidden fixed h-screen inset-0 z-40 bg-white dark:bg-[#050505] pt-24 px-6"
          x-transition:enter="transition ease-out duration-300"
@@ -65,7 +73,6 @@
          x-transition:leave-end="opacity-0 -translate-y-full"
          @click.away="mobileMenuOpen = false">
 
-
         <nav class="flex flex-col gap-8">
             <a href="/courses" class="text-2xl font-800 tracking-tighter uppercase dark:text-white" @click="mobileMenuOpen = false">Kurslar</a>
             <a href="/about" class="text-2xl font-800 tracking-tighter uppercase dark:text-white" @click="mobileMenuOpen = false">Biz haqimizda</a>
@@ -73,9 +80,26 @@
 
             <div class="h-[1px] bg-slate-100 dark:bg-white/5 w-full my-4"></div>
 
-            <div class="flex flex-col gap-4">
-                <a href="#" class="text-center py-4 text-sm font-bold uppercase tracking-widest border border-slate-200 dark:border-white/10 rounded-2xl">Kirish</a>
-                <a href="#" class="text-center py-4 text-sm font-bold uppercase tracking-widest bg-brand-500 text-white rounded-2xl shadow-xl shadow-brand-500/20">Ro'yxatdan o'tish</a>
+            <div sec:authorize="!isAuthenticated()" class="flex flex-col gap-4">
+                <a th:href="@{/auth/login}" class="text-center py-4 text-sm font-bold uppercase tracking-widest border border-slate-200 dark:border-white/10 rounded-2xl dark:text-white">Kirish</a>
+                <a th:href="@{/auth/register}" class="text-center py-4 text-sm font-bold uppercase tracking-widest bg-brand-500 text-white rounded-2xl shadow-xl shadow-brand-500/20">Ro'yxatdan o'tish</a>
+            </div>
+
+            <div sec:authorize="isAuthenticated()" class="flex flex-col gap-4">
+                <div class="p-4 bg-slate-50 dark:bg-white/5 rounded-2xl">
+                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Xush kelibsiz</div>
+                    <div class="text-lg font-800 uppercase tracking-tighter dark:text-white"
+                         sec:authentication="principal.profile.fullName">Ism Familiya</div>
+                </div>
+
+                <a sec:authorize="hasRole('ADMIN')" href="/admin/dashboard"
+                   class="text-center py-4 text-sm font-bold uppercase tracking-widest border border-brand-500/30 text-brand-500 rounded-2xl">
+                    Admin Panelga o'tish
+                </a>
+
+                <a th:href="@{/logout}" class="text-center py-4 text-sm font-bold uppercase tracking-widest bg-red-500/10 text-red-500 rounded-2xl hover:bg-red-500 hover:text-white transition-colors">
+                    Tizimdan chiqish
+                </a>
             </div>
         </nav>
     </div>

@@ -5,6 +5,8 @@ import dasturhub.uz.entity.Page;
 import dasturhub.uz.repository.PageRepository;
 import dasturhub.uz.services.PageService;
 import dasturhub.uz.services.course.CourseService;
+import dasturhub.uz.services.profile.CustomUserDetails;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import dasturhub.uz.entity.Banner;
 import dasturhub.uz.repository.BannerRepository;
@@ -28,7 +30,7 @@ public class MainController {
 
 
     @GetMapping
-    public String getMainIndexPage(Model model) {
+    public String getMainIndexPage(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
         List<Banner> banners = bannerRepository.findAll();
         Page homePage = pageService.getPage(1L);
         List<Course> courses = courseService.getAllCourse();
@@ -38,6 +40,10 @@ public class MainController {
         model.addAttribute("seo_title", homePage.getSeoTitle());
         model.addAttribute("seo_description", homePage.getSeoDescription());
         model.addAttribute("seo_keywords", homePage.getSeoKeywords());
+
+        if (userDetails != null) {
+            model.addAttribute("user", userDetails.getProfile());
+        }
 
         return "index";
     }
